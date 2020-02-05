@@ -7,6 +7,6 @@ $livros = $consultaDB->fetchAll(PDO::FETCH_ASSOC);
 
 foreach($livros as $livro){
  
-  echo $livro["id_produto"]."<br>";
+  echo $livro["nome"]."<br>".$livro["descricao"]."<br>".$livro["preco"]."<hr>";
 }
 ?>
