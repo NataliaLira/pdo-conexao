@@ -1,14 +1,16 @@
 <?php
+// adiciona conexão
 require_once('conexao.php');
+
+// prepara a query
 $consultaDB = $conexaoDB->prepare('SELECT * from produto');
+
+// executa a query
 $consulta = $consultaDB->execute();
 
+// guarda o resultado em array associativo
 $livros = $consultaDB->fetchAll(PDO::FETCH_ASSOC);
 
-// foreach ($livros as $livro) {
-
-//   echo $livro["nome"] . "<br>" . $livro["descricao"] . "<br>" . $livro["preco"] . "<hr>";
-// }
 ?>
 
 
@@ -43,9 +45,11 @@ $livros = $consultaDB->fetchAll(PDO::FETCH_ASSOC);
         <th>Preço</th>
         <th>Categoria</th>
         <th>Editora</th>
+        <th>Ações</th>
       </tr>
     </thead>
     <tbody>
+      <!-- listar todos os livros -->
       <?php foreach ($livros as $livro) : ?>
         <tr>
           <td><?php echo $livro['nome'] ?></td>
@@ -53,6 +57,11 @@ $livros = $consultaDB->fetchAll(PDO::FETCH_ASSOC);
           <td><?php echo $livro['preco'] ?></td>
           <td><?php echo $livro['fk_categoria'] ?></td>
           <td><?php echo $livro['fk_editora'] ?></td>
+          <td>
+            <!-- redireciona mandando id do livro por parametro GET -->
+            <a href="editarLivro.php?id=<?php echo $livro['id'] ?>">editar</a>
+            <a href="excluirLivro.php?id=<?php echo $livro['id'] ?>">excluir</a>
+          </td>
         </tr>
       <?php endforeach; ?>
     </tbody>
