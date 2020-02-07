@@ -71,7 +71,9 @@ if (isset($_POST['cadastro-livro'])) {
     </select>
 
     <!-- o name do button é o que faz passar na condição do if -->
-    <button name="cadastro-livro" class="btn btn-primary"> Enviar </button>
+    <button name="cadastro-livro" class="btn btn-primary my-5"> Enviar </button>
+    <a href="livros.php" class="btn btn-default">Voltar</a>
+
   </form>
 </body>
 

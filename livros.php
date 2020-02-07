@@ -53,14 +53,14 @@ $livros = $consultaDB->fetchAll(PDO::FETCH_ASSOC);
       <?php foreach ($livros as $livro) : ?>
         <tr>
           <td><?php echo $livro['nome'] ?></td>
-          <td><?php echo $livro['descricao'] ?></td>
+          <td width="40%"><?php echo $livro['descricao'] ?></td>
           <td><?php echo $livro['preco'] ?></td>
           <td><?php echo $livro['fk_categoria'] ?></td>
           <td><?php echo $livro['fk_editora'] ?></td>
           <td>
             <!-- redireciona mandando id do livro por parametro GET -->
-            <a href="editarLivro.php?id=<?php echo $livro['id'] ?>">editar</a>
-            <a href="excluirLivro.php?id=<?php echo $livro['id'] ?>">excluir</a>
+            <a class="btn btn-secondary" href="editarLivro.php?id=<?php echo $livro['id'] ?>">editar</a>
+            <a class="btn btn-danger" href="excluirLivro.php?id=<?php echo $livro['id'] ?>">excluir</a>
           </td>
         </tr>
       <?php endforeach; ?>

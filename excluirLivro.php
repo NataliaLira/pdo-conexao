@@ -19,23 +19,20 @@ $livroExecuta = $livroConsulta->execute([":id" => $_GET['id']]);
 
 $livro = $livroConsulta->fetch(PDO::FETCH_ASSOC);
 
+// ATENÇÃO: tente excluir algum livro que você adicionou, não é possivel excluir livros que estejam associados a tabela pedidos
 
 // quando formulario é enviado entra nesse if
-if (isset($_POST['editar-livro'])) {
+if (isset($_POST['excluir-livro'])) {
 
   //verifica campos preenchidos
   if ($_POST['nome'] != "" && $_POST['descricao'] != "") {
 
     //prepara a query
-    $query = $conexaoDB->prepare('UPDATE produto SET nome = :nome, descricao = :descricao, preco = :preco, fk_editora = :fk_editora, fk_categoria = 49, fk_autor = 41, imagem = "sem-imagem" WHERE id = :id');
+    $query = $conexaoDB->prepare('DELETE FROM produto WHERE id = :id');
 
     // executa query
     $resultado = $query->execute([
-      ":id" => $_GET['id'],
-      ":nome" => $_POST['nome'],
-      ":descricao" => $_POST['descricao'],
-      ":preco" => $_POST['preco'],
-      ":fk_editora" => $_POST['fk_editora']
+      ":id" => $_GET['id']
     ]);
 
     //se tudo der certo, redireciona para lista de livros :)
@@ -54,34 +51,32 @@ if (isset($_POST['editar-livro'])) {
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-  <title>Editar Livro</title>
+  <title>Excluir Livro</title>
 </head>
 
 <body>
   <div class="container my-5">
-    <h1>Editar livro</h1>
+    <h1>Excluir livro</h1>
   </div>
   <form method="POST" class="container">
-    <label for="nome">Nome Produto:</label>
-    <input type="text" id="nome" name="nome" class="form-control" value="<?php echo $livro['nome']; ?>">
+    <label for="nome">Nome:</label>
+    <input type="text" id="nome" name="nome" class="form-control" value="<?php echo $livro['nome']; ?>" readonly>
     <label for="descricao">Descrição:</label>
-    <input type="text" name="descricao" id="descricao" class="form-control" value="<?php echo $livro['descricao']; ?>">
+    <input type="text" name="descricao" id="descricao" class="form-control" value="<?php echo $livro['descricao']; ?>" readonly>
     <label for="preco">Preço:</label>
-    <input type="number" name="preco" id="preco" class="form-control" value="<?php echo $livro['preco']; ?>">
-    <label for="imagem">Imagem:</label>
-    <input type="file" name="imagem" id="imagem" class="form-control">
+    <input type="number" name="preco" id="preco" class="form-control" value="<?php echo $livro['preco']; ?>" readonly>
     <label for="fk_editora">Editora</label>
-    <select name="fk_editora" id="fk_editora" class="form-control">
+    <select name="fk_editora" id="fk_editora" class="form-control" readonly>
       <?php foreach ($editoras as $editora) { ?>
         <!-- cria um option para cada editora -->
         <option value="<?php echo $editora["id"]; ?>" <?php echo ($editora["id"] == $livro['fk_editora']) ? "selected" : ""; ?>>
           <?php echo $editora["nome"]; ?>
         </option>
-
       <?php } ?>
     </select>
+
     <!-- o name do button é o que faz passar na condição do if -->
-    <button name="editar-livro" class="btn btn-primary my-5"> Enviar </button>
+    <button name="excluir-livro" class="btn btn-danger my-5"> Excluir </button>
     <a href="livros.php" class="btn btn-default">Voltar</a>
   </form>
 </body>
